@@ -1,0 +1,34 @@
+<div class="front-chat-widget">
+  {% if section.settings.enable_chat %}
+    <script src='https://chat-assets.frontapp.com/v1/chat.bundle.js'></script>
+    <script>
+      window.FrontChat('init', {chatId: '{{ section.settings.chat_id }}', useDefaultLauncher: true});
+    </script>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "Front Chat Widget",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_chat",
+      "label": "Enable Chat Widget",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "chat_id",
+      "label": "Chat ID",
+      "default": "d78e360806a39113f2708c84d9082ccf"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Front Chat Widget",
+      "category": "Customer Service"
+    }
+  ]
+}
+{% endschema %}

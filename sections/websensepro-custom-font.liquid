@@ -1,0 +1,235 @@
+{% if section.settings.enable %}
+  <style data-custom-fonts>
+    /* Debug: Custom Fonts Section Enabled */
+    {% for block in section.blocks %}
+      /* Debug: Processing Font Block {{ forloop.index }}: {{ block.settings.name }} */
+      {% assign name = block.settings.name %}
+      {% assign url = block.settings.custom_font_url %}
+      {% assign custom_font_weight = block.settings.custom_font_weight %}
+      {% assign customFontStyle = block.settings.custom_font_style %}
+      {% assign apply_custom = block.settings.apply_custom %}
+
+      {% if url != blank and url != "" %}
+        @font-face {
+          font-family: '{{ name }}';
+          src: url('{{ url }}') format('woff2'),
+               url('{{ url }}') format('woff'),
+               url('{{ url }}') format('truetype');
+          font-display: swap;
+          {% if customFontStyle != 'none' %}
+          font-style: {{ customFontStyle }};
+          {% endif %}
+          {% if custom_font_weight != 'none' %}
+          font-weight: {{ custom_font_weight }};
+          {% endif %}
+        }
+
+        {% assign font_family = name | append: ", -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" %}
+
+        /* Debug: Font Family - {{ font_family }} */
+
+        {% assign elements = "h1,h2,h3,h4,h5,h6,p,span,a,input,label,legend,button,summary,select,option,small" | split: "," %}
+        {% for element in elements %}
+          {% assign apply_var = "apply_" | append: element %}
+          {% if block.settings[apply_var] %}
+            /* Debug: Applying to {{ element }} */
+            {{ element }} {
+              font-family: {{ font_family }};
+              {% if custom_font_weight != 'none' %}
+              font-weight: {{ custom_font_weight }};
+              {% endif %}
+            }
+          {% endif %}
+        {% endfor %}
+
+        {% if apply_custom != blank %}
+          /* Debug: Custom Selectors - {{ apply_custom }} */
+          {{ apply_custom }} {
+            font-family: {{ font_family }};
+            {% if custom_font_weight != 'none' %}
+            font-weight: {{ custom_font_weight }};
+            {% endif %}
+          }
+        {% endif %}
+      {% else %}
+        /* Debug: No valid URL for this font block */
+      {% endif %}
+    {% endfor %}
+  </style>
+{% else %}
+  /* Debug: Custom Fonts Section Disabled */
+{% endif %}
+
+
+{% schema %}
+{
+  "name": "Custom Font",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Subscribte to [WebSensePro for Free Tutorials](https://www.youtube.com/c/websensepro?sub_confirmation=1)"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable",
+      "label": "Enable",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Font",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Subscribte to [WebSensePro for Free Tutorials](https://www.youtube.com/c/websensepro?sub_confirmation=1)"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Font name",
+          "default": "customfont"
+        },
+        {
+          "type": "select",
+          "id": "custom_font_weight",
+          "label": "Font weight",
+          "default": "none",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "normal",
+              "label": "Normal"
+            },
+            {
+              "value": "bold",
+              "label": "Bold"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "custom_font_url",
+          "label": "Font URL"
+        },
+        {
+          "type": "paragraph",
+          "content": "Apply the custom font to the following HTML elements:"
+        },
+        {
+          "type": "checkbox",
+          "id": "apply_h1",
+          "label": "H1",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "apply_h2",
+          "label": "H2",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "apply_h3",
+          "label": "H3",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "apply_h4",
+          "label": "H4",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "apply_h5",
+          "label": "H5",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "apply_h6",
+          "label": "H6",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "apply_span",
+          "label": "<span> tags",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "apply_p",
+          "label": "<p> tags",
+          "default": true
+        },
+         {
+          "type": "checkbox",
+          "id": "apply_a",
+          "label": "<a> tags",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "apply_input",
+          "label": "<input> tags",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "apply_label",
+          "label": "<label> tags",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "apply_legend",
+          "label": "<legend> tags",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "apply_button",
+          "label": "<button> tags",
+          "default": true
+        },
+         {
+          "type": "checkbox",
+          "id": "apply_summary",
+          "label": "<summary> tags",
+          "default": true
+        },
+         {
+          "type": "checkbox",
+          "id": "apply_select",
+          "label": "<select> tags",
+          "default": true
+        },
+         {
+          "type": "checkbox",
+          "id": "apply_option",
+          "label": "<option> tags",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "apply_small",
+          "label": "<small> tags",
+          "default": true
+        },
+        {
+          "type": "textarea",
+          "id": "apply_custom",
+          "label": "CSS Selectors",
+          "info": "Apply font to custom CSS selectors"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

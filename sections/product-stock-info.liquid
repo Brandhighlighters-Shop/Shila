@@ -1,0 +1,22 @@
+{% assign today = 'now' | date: '%Y-%m-%d' %}
+{% assign delivery_date_1 = today | date_add: 2 %}
+{% assign delivery_date_2 = today | date_add: 5 %}
+
+<div class="product-stock-info">
+    <span class="stock-icon">📦</span> 
+    <span class="stock-quantity">{{ product.inventory_quantity }}</span> 
+    <span class="delivery-dates">Can be delivered between {{ delivery_date_1 }} and {{ delivery_date_2 }}</span>
+</div>
+
+{% schema %}
+{
+  "name": "Product Stock Info",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Default",
+      "category": "Product"
+    }
+  ]
+}
+{% endschema %}
